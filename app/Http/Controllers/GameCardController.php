@@ -79,7 +79,7 @@ class GameCardController extends Controller
     public function show($name)
     {
         Log::debug("Usuario " . Auth::User()->name . " ingresando al metodo Show del GameCardController");
-        $response = [];
+
         $game_cards = DB::select("SELECT * FROM game_cards WHERE name LIKE '%$name%'");
         if (!$game_cards) {
             Log::debug("Metodo show del GameCardController - No se encontraron registros");
@@ -87,28 +87,9 @@ class GameCardController extends Controller
                 'message' => 'No se encontraron registros'
             ], 404);
         }
-
-        foreach ($game_cards as $game_card) {
-            $sale = Sale::where('game_card_id', $game_card->id)->first();
-
-            $aux =  [
-                'game_card_id' => $game_card->id,
-                'name_card' => $game_card->name,
-                'quantity' => $sale->quantity,
-                'price' => $sale->price,
-            ];
-            $response[] = $aux;
-        }
-
-        if (!$response) {
-            Log::debug("Metodo Show del GameCardController - No se encontraron registros");
-            return response()->json([
-                'message' => 'No se encontraron registros'
-            ], 404);
-        }
-        Log::debug("Metodo externalQuest del GameCardController - Se encontraron [" . count($response) . "] registros");
+        Log::debug("Metodo externalQuest del GameCardController - Se encontraron [" . count($game_cards) . "] registros");
         return response()->json([
-            $response
+            $game_cards
         ], 200);
     }
 

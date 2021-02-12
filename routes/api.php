@@ -29,10 +29,10 @@ Route::get('/questExternal/{name}', 'GameCardController@externalQuest');
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/gameCard', 'GameCardController@store')->middleware('admin');
-    Route::get('/collection', 'CollectionController@store')->middleware('admin');
+    Route::post('/gameCard', 'GameCardController@store')->middleware('admin'); // Crear una carta
+    Route::post('/collection', 'CollectionController@store')->middleware('admin'); // crear una coleccion
 
-    Route::post('/sale', 'SaleController@store')->middleware('Particular', 'Profesional');
+    Route::post('/sale', 'SaleController@store')->middleware('Particular');
 
-    Route::get('/gameCard/{name}', 'GameCardController@show')->middleware('Particular', 'Profesional');
+    Route::get('/gameCard/{name}', 'GameCardController@show')->middleware('Particular');
 });

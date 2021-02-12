@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         Log::debug("Metodo Store del UserController");
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique',
+            'name' => 'required',
             'password' => 'required',
             'email' => 'required|email',
             'role' => 'required|max:5',

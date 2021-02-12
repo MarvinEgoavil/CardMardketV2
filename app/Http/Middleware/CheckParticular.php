@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Closure;
 
 class CheckParticular
@@ -15,10 +17,12 @@ class CheckParticular
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->role != 'parti')
-            return response()->json([
-                'message' => 'Usuario no autorizado'
-            ], 403);
-        return $next($request);
+        Log::debug("Usuario " . Auth::User()->role);
+        if (Auth::User()->role != 'admin')
+            return $next($request);
+
+        return response()->json([
+            'message' => 'Usuario no autorizado'
+        ], 403);
     }
 }
